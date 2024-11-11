@@ -35,3 +35,16 @@ export const getDatafromDB = async (dbName: string, tableName: string): Promise<
     request.onerror = () => reject(request.error);
   });
 };
+
+export const deleteDataFromDB = async (dbName: string, tableName: string, id: number | string) => {
+    const db = await openDatabase(dbName, tableName);
+    const transaction = db.transaction(tableName, "readwrite");
+    const store = transaction.objectStore(tableName);
+  
+    const request = store.delete(id);
+  
+    return new Promise((resolve, reject) => {
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error);
+    });
+  };

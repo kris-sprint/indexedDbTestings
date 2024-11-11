@@ -8,7 +8,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: "autoUpdate",
-      devOptions: { enabled: true }, // - to run service worker in dev
+      // devOptions: { enabled: true }, // - to run service worker in dev
       strategies: "injectManifest",
       srcDir: "src",
       filename: "sw.ts",
