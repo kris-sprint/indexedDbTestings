@@ -1,0 +1,13 @@
+.table {
+  width: 100%;
+  font-size: calc(1vw + 0.5rem); /* Adjust font size dynamically */
+  word-break: break-all;
+  table-layout: auto; /* Fill available space */
+  text-align: center;
+  /* border-collapse: collapse; */
+  border-spacing: .7rem;
+}
+
+.row {
+  /* border-bottom: 1px solid white; */
+}

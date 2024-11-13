@@ -4,10 +4,13 @@ import { precacheAndRoute } from "workbox-precaching";
 import { registerRoute } from "workbox-routing";
 import { CacheFirst } from "workbox-strategies";
 import { ExpirationPlugin } from "workbox-expiration";
-import { setCatchHandler } from "workbox-routing";
+
+// import { setupFlightInfoDb } from "./database/indexedDb";
 
 declare let self: ServiceWorkerGlobalScope;
 precacheAndRoute(self.__WB_MANIFEST);
+
+const VERSION = "1";
 
 registerRoute(
   ({ request }) =>
@@ -28,26 +31,19 @@ registerRoute(
   })
 );
 
-// Fallback to the offline page for document requests when offline
-setCatchHandler(async ({ request }) => {
-  if (request.destination === "document") {
-    // Attempt to find the offline page in cache
-    const cache = await caches.open("assets-cache");
-    const cachedResponse = await cache.match("/offline.html");
-
-    return cachedResponse || Response.error(); // Return cached offline.html or an error
-  }
-  return Response.error(); // Return an error response for other requests
-});
 
 self.addEventListener("install", (event: any) => {
   console.log("Service Worker installing.", event);
 });
 
 self.addEventListener("activate", (event: any) => {
+  console.log('version', VERSION);
+  
   console.log("Service Worker activating.", event);
 });
 
 self.addEventListener("fetch", (event: any) => {
+  // Check dixie
+  
   console.log("Fetching:", event.request.url);
 });
