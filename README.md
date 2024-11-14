@@ -1,3 +1,15 @@
-# 
-To run the the production version, first build then run preview.
-This is recmoedned, you can run the service worker on a dev server by enabling devOptions as well, but this is not always accurate, although much faster.
+###
+```npm i```
+
+To run
+```
+npm run build-and-preview
+```
+
+npm run dev does not activate the service worker, unless you 
+enable 
+```
+      // devOptions: { enabled: true }, // - to run service worker in dev
+```
+
+in vite.config.ts

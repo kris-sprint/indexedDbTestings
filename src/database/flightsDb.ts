@@ -14,6 +14,15 @@ export class FlightDatabase extends Dexie {
 
 export const db = new FlightDatabase();
 
+// export const cacheFlights = async (flights: FlightData[]): Promise<void> => {
+//   try {
+//     await db.flights.bulkPut(flights);
+//   } catch (error) {
+//     console.error("Error caching flights:", error);
+//     throw error;
+//   }
+// };
+
 export class FlightDBOperations {
   static async cacheFlights(flights: FlightData[]): Promise<void> {
     try {
@@ -49,16 +58,20 @@ export class FlightDBOperations {
     try {
       // Get cached data first
       const cachedFlights = await this.getCachedFlights();
+      console.log("cachedFlights", cachedFlights);
 
       // Start network fetch
+      console.log("request", request);
       const networkPromise = fetch(request)
         .then(async (response) => {
           if (response.ok) {
+            console.log("response", response);
             const flights: FlightData[] = await response.clone().json();
+            console.log('flights', flights)
             // Cache the new data
             await this.cacheFlights(flights);
             // Clean old data
-            await this.cleanOldFlights();
+            // await this.cleanOldFlights();
             return response;
           }
           throw new Error("Network response was not ok");

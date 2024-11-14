@@ -6,18 +6,34 @@ import { CacheFirst } from "workbox-strategies";
 import { ExpirationPlugin } from "workbox-expiration";
 
 import { FlightDBOperations } from "./database/flightsDb";
+// import { cacheFlights } from "./database/flightsDb";
 
 declare let self: ServiceWorkerGlobalScope;
+
+self.addEventListener("fetch", (event) => {
+  console.log("fetch listener ran:", event.request.url);
+
+  // Check if this is an API request
+  if (event.request.url.includes("/get-data")) {
+    console.log("Intercepting flight data request");
+    // console.log("event.request", event.request);
+    event.respondWith(FlightDBOperations.handleFlightDataFetch(event.request));
+    // event.respondWith(FlightDBOperations.handleFlightDataFetch(event.request));
+    // return; // Early return after handling flight data
+  }
+});
+
 precacheAndRoute(self.__WB_MANIFEST);
 
-const VERSION = "1";
+const VERSION = "8";
+console.log('VERSION', VERSION)
 
 registerRoute(
   ({ request }) =>
-    request.destination === "style" || // CSS
-    request.destination === "script" || // JavaScript
-    request.destination === "document" || // HTML
-    (request.destination === "image" && /\.(?:png|jpg|jpeg|svg|gif)$/.test(request.url)), // Images
+    request.destination === "style" ||
+    request.destination === "script" ||
+    request.destination === "document" ||
+    (request.destination === "image" && /\.(?:png|jpg|jpeg|svg|gif)$/.test(request.url)),
 
   // CacheFirst strategy for fast loading
   new CacheFirst({
@@ -39,14 +55,6 @@ self.addEventListener("activate", (event: any) => {
   console.log("version", VERSION);
 
   console.log("Service Worker activating.", event);
-});
-
-self.addEventListener("fetch", (event: any) => {
-  console.log('fetch ran');
-  console.log('url', event.request)
-  if (event.request.url.includes("/get-data")) {
-    event.respondWith(FlightDBOperations.handleFlightDataFetch(event.request));
-  }
 });
 
 self.addEventListener("push", function (event) {
