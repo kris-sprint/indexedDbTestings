@@ -5,7 +5,7 @@ import { registerRoute } from "workbox-routing";
 import { CacheFirst } from "workbox-strategies";
 import { ExpirationPlugin } from "workbox-expiration";
 
-// import { setupFlightInfoDb } from "./database/indexedDb";
+import { FlightDBOperations } from "./database/flightsDb";
 
 declare let self: ServiceWorkerGlobalScope;
 precacheAndRoute(self.__WB_MANIFEST);
@@ -31,19 +31,42 @@ registerRoute(
   })
 );
 
-
 self.addEventListener("install", (event: any) => {
   console.log("Service Worker installing.", event);
 });
 
 self.addEventListener("activate", (event: any) => {
-  console.log('version', VERSION);
-  
+  console.log("version", VERSION);
+
   console.log("Service Worker activating.", event);
 });
 
 self.addEventListener("fetch", (event: any) => {
-  // Check dixie
-  
-  console.log("Fetching:", event.request.url);
+  console.log('fetch ran');
+  console.log('url', event.request)
+  if (event.request.url.includes("/get-data")) {
+    event.respondWith(FlightDBOperations.handleFlightDataFetch(event.request));
+  }
 });
+
+self.addEventListener("push", function (event) {
+  const data = event.data ? event.data.json() : {};
+
+  const options = {
+    body: data.body || "You have a new notification",
+    icon: data.icon || "/icon.png",
+    badge: data.badge || "/badge.png",
+    data: {
+      url: data.url || "/",
+    },
+  };
+
+  event.waitUntil(self.registration.showNotification(data.title || "Notification Title", options));
+});
+
+// self.addEventListener('notificationclick', function (event) {
+//   event.notification.close();
+//   event.waitUntil(
+//     clients.openWindow(event.notification.data.url)
+//   );
+// });

@@ -12,7 +12,7 @@ export const useFlightData = () => {
     const getData = async () => {
       try {
         setLoading(true);
-        const result = await fetchFlightData(); // Call the fetch function
+        const result = await fetchFlightData();
         setData(result);
       } catch (err) {
         setError((err as Error).message);
