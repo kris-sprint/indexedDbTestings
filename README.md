@@ -13,3 +13,5 @@ enable
 ```
 
 in vite.config.ts
+
+Most recent code in the notifications branch, will sort out later [15/11/2024].
