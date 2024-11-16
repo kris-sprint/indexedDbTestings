@@ -7,6 +7,16 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --white: #ffffff;
+  --black: #181818;
+
+  --header: #f60;
+  --header-text: var(--white);
+
+  --nav: var(--white);
+  --nav-item: var(--header);
+  --nav-item-active: var(--black);
 }
 
 *,
@@ -21,8 +31,8 @@
 }
 
 body {
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: var(--black);
+  background-color: var(--white);
 }
 
 #root {
