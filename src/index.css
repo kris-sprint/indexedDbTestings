@@ -10,6 +10,8 @@
 
   --white: #ffffff;
   --black: #181818;
+  --gray: #F1F5F6;
+  --border: #666666;
 
   --header: #f60;
   --header-text: var(--white);

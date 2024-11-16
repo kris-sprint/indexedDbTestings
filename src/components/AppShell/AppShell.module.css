@@ -12,11 +12,13 @@
 
 .main {
   flex: 1;
+  background-color: var(--gray);
   /* border: 1px solid orange; */
 }
 
 .nav {
-  padding-bottom: env(safe-area-inset-bottom);
+  /* padding-bottom: env(safe-area-inset-bottom); */
+  margin-bottom: env(safe-area-inset-bottom);
 }
 
 .navLinks {
@@ -24,7 +26,7 @@
   justify-content: center;
   align-items: center;
   gap: 2rem;
-  padding-top: .6rem;
+  padding-top: 0.6rem;
 }
 
 .navLinkItem {
@@ -51,5 +53,5 @@
 }
 
 .navLinkItem.active svg {
-  color: var(--nav-item-svg-active) 
+  color: var(--nav-item-svg-active);
 }
