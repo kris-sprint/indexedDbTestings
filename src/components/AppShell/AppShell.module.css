@@ -12,7 +12,7 @@
 
 .main {
   flex: 1;
-  border: 1px solid orange;
+  /* border: 1px solid orange; */
 }
 
 .nav {
@@ -42,13 +42,13 @@
 
 .navLinkItem svg {
   font-size: 1rem;
-  color: var(--nav-item);
+  color: var(--nav-item-svg);
 }
 
 .navLinkItem.active {
-  border-bottom: 4px solid var(--nav-item);
+  border-bottom: 4px solid var(--nav-item-svg);
 }
 
 .navLinkItem.active svg {
-  color: var(--nav-item-active) 
+  color: var(--nav-item-svg-active) 
 }

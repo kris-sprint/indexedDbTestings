@@ -1,0 +1,77 @@
+/* HomePage.module.css */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.title {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.switchContainer {
+  margin: 20px;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  border-radius: 50%;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #4CAF50; /* Green background when enabled */
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px); /* Move the switch to the right */
+}
+
+input:not(:checked) + .slider {
+  background-color: #f44336; /* Red background when disabled */
+}
+
+input:not(:checked) + .slider:before {
+  transform: translateX(0); /* Keep the switch to the left */
+}
+
+.info {
+  margin-top: 10px;
+  color: #f44336;
+  font-size: 14px;
+}

@@ -15,8 +15,13 @@
   --header-text: var(--white);
 
   --nav: var(--white);
-  --nav-item: var(--header);
+
+  /* nav item text */
+  --nav-item: var(--black);
   --nav-item-active: var(--black);
+
+  --nav-item-svg: var(--header);
+  --nav-item-svg-active: var(--black);
 }
 
 *,
