@@ -43,3 +43,10 @@ body {
 #root {
   height: 100svh;
 }
+
+/* This will apply padding to the bottom only on devices with a notch (iPhone X and later) */
+/* @supports (--css: variables) {
+  .navbar {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+} */
