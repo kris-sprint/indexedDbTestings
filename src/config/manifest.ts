@@ -1,10 +1,10 @@
 import { ManifestOptions } from "vite-plugin-pwa";
 
 export const manifest: Partial<ManifestOptions> = {
-  name: "My PWA App",
-  short_name: "PWA",
-  description: "A Progressive Web App using Vite and React",
-  theme_color: "#ffffff",
+  name: "FAST DEMO",
+  short_name: "FAST",
+  description: "An app to aid frontline comms.",
+  theme_color: "#f60",
   background_color: "#ffffff",
   display: "standalone",
   scope: "/",

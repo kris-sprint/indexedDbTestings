@@ -85,7 +85,7 @@ const Home: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Home Page v1.1</h1>
+      <h1 className={styles.title}>Home Page v1.2</h1>
       {/* TODO it's own component */}
       <div className={styles.switchContainer}>
         <label className={styles.switch}>
