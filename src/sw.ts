@@ -25,8 +25,7 @@ self.addEventListener("fetch", (event) => {
 
 precacheAndRoute(self.__WB_MANIFEST);
 
-const VERSION = "9";
-console.log('VERSION', VERSION)
+const VERSION = "10";
 
 registerRoute(
   ({ request }) =>

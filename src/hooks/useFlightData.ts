@@ -1,4 +1,3 @@
-// useFlightData.ts
 import { useEffect, useState } from "react";
 import { FlightData } from "../types/flightData";
 import { fetchFlightData } from "../api/flightsAPI";

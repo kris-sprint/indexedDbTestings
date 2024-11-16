@@ -14,16 +14,11 @@ export class FlightDatabase extends Dexie {
 
 export const db = new FlightDatabase();
 
-// export const cacheFlights = async (flights: FlightData[]): Promise<void> => {
-//   try {
-//     await db.flights.bulkPut(flights);
-//   } catch (error) {
-//     console.error("Error caching flights:", error);
-//     throw error;
-//   }
-// };
-
 export class FlightDBOperations {
+  /**
+   * Cache flight data in the database.
+   * @param flights Array of flights to cache.
+   */
   static async cacheFlights(flights: FlightData[]): Promise<void> {
     try {
       await db.flights.bulkPut(flights);
@@ -33,6 +28,10 @@ export class FlightDBOperations {
     }
   }
 
+  /**
+   * Retrieve all cached flights from the database.
+   * @returns Array of cached flights.
+   */
   static async getCachedFlights(): Promise<FlightData[]> {
     try {
       return await db.flights.toArray();
@@ -42,6 +41,9 @@ export class FlightDBOperations {
     }
   }
 
+  /**
+   * Remove flights older than a cutoff time (24 hours).
+   */
   static async cleanOldFlights(): Promise<void> {
     try {
       const cutoffTime = new Date();
@@ -54,34 +56,59 @@ export class FlightDBOperations {
     }
   }
 
+  /**
+   * Synchronize the local cache with server data.
+   * @param serverFlights Array of flights fetched from the server.
+   */
+  static async synchronizeCache(serverFlights: FlightData[]): Promise<void> {
+    try {
+      const serverFlightIds = new Set(serverFlights.map((flight) => flight.flight));
+
+      // Remove flights from the cache that are not present on the server
+      await db.flights.where("flight").noneOf([...serverFlightIds]).delete();
+
+      // Add or update flights from the server
+      await this.cacheFlights(serverFlights);
+    } catch (error) {
+      console.error("Error synchronizing cache:", error);
+      throw error;
+    }
+  }
+
+  /**
+   * Handle fetching flight data with cache-first and synchronization strategies.
+   * @param request The network request for flight data.
+   * @returns A Response object containing either cached or fetched data.
+   */
   static async handleFlightDataFetch(request: Request): Promise<Response> {
     try {
-      // Get cached data first
+      // Get cached data
       const cachedFlights = await this.getCachedFlights();
-      console.log("cachedFlights", cachedFlights);
+      console.log("Cached flights:", cachedFlights);
 
       // Start network fetch
-      console.log("request", request);
       const networkPromise = fetch(request)
         .then(async (response) => {
-          if (response.ok) {
-            console.log("response", response);
-            const flights: FlightData[] = await response.clone().json();
-            console.log('flights', flights)
-            // Cache the new data
-            await this.cacheFlights(flights);
-            // Clean old data
-            // await this.cleanOldFlights();
-            return response;
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
           }
-          throw new Error("Network response was not ok");
+
+          // Parse the server response
+          const flights: FlightData[] = await response.clone().json();
+          console.log("Fetched flights:", flights);
+
+          // Synchronize the cache with server data
+          await this.synchronizeCache(flights);
+
+          // Return the original response
+          return response;
         })
         .catch((error) => {
           console.error("Network fetch failed:", error);
           throw error;
         });
 
-      // If we have cached data, return it immediately
+      // If cached data exists, return it immediately
       if (cachedFlights.length > 0) {
         // Revalidate cache in the background
         networkPromise.catch(console.error);
@@ -94,7 +121,7 @@ export class FlightDBOperations {
         });
       }
 
-      // If no cached data, wait for network response
+      // If no cached data, wait for the network response
       return await networkPromise;
     } catch (error) {
       console.error("Error handling flight data fetch:", error);

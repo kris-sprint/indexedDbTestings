@@ -11,8 +11,8 @@ const FlightsPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       const data = await fetchFlightData();
+      console.log('hook data', data);
       setFlightData(data);
-      console.log('data', data);
     }
 
     fetchData();
