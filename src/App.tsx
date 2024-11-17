@@ -4,8 +4,9 @@ import { AppShell } from './components/AppShell/AppShell';
 import { LoadingFallback } from './components/LoadingFallback/LoadingFallback';
 import FlightsPage from './pages/FlightsPage/FlightsPage';
 // import { NotFound } from './components/NotFound';
+import Home from './pages/HomePage/HomePage';
 
-const Home = React.lazy(() => import('./pages/HomePage/HomePage'));
+// const Home = React.lazy(() => import('./pages/HomePage/HomePage'));
 
 const App: React.FC = () => {
   return (

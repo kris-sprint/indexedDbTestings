@@ -88,7 +88,7 @@ const Home: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Home Page with Notifications</h1>
+      <h1 className={styles.title}>Home Page v1.3</h1>
 
       {/* Notification Toggle */}
       <div className={styles.switchContainer}>
