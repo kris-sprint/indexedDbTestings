@@ -1,4 +1,5 @@
 /// <reference lib="webworker" />
+
 import { precacheAndRoute } from "workbox-precaching";
 
 import { registerRoute } from "workbox-routing";
@@ -7,6 +8,11 @@ import { ExpirationPlugin } from "workbox-expiration";
 
 import { FlightDBOperations } from "./database/flightsDb";
 // import { cacheFlights } from "./database/flightsDb";
+
+import { initializeApp } from '@firebase/app';
+// importScripts('https://www.gstatic.com/firebasejs/9.6.8/firebase-messaging-compat.js');
+import { getMessaging, onBackgroundMessage } from '@firebase/messaging/sw';
+
 
 declare let self: ServiceWorkerGlobalScope;
 
@@ -77,3 +83,21 @@ self.addEventListener("push", function (event) {
 //     clients.openWindow(event.notification.data.url)
 //   );
 // });
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAqkmdTEdSblfmpf236_RKibuks-3zGRBI",
+  authDomain: "pinpoint-fdef8.firebaseapp.com",
+  projectId: "pinpoint-fdef8",
+  storageBucket: "pinpoint-fdef8.firebasestorage.app",
+  messagingSenderId: "855562263974",
+  appId: "1:855562263974:web:faa12bd356b8b9e3b9c367",
+};
+
+//Initialize Firebase and get the messaging module
+const firebaseApp = initializeApp(firebaseConfig);
+const messaging = getMessaging(firebaseApp);
+
+// //Handle Background Firebase Messages that come in while the app is closed
+onBackgroundMessage(messaging, (payload: any) => {
+  console.log("Received background message ", payload);
+});

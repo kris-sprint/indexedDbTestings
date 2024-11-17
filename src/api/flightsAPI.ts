@@ -1,6 +1,6 @@
 import { FlightData } from "../types/flightData";
 
-// const BASE_URL = import.meta.env.BASE_URL;
+// const BASE_URL = import.meta.env.VITE_BASE_URL;
 const BASE_URL = 'https://yllqzm0ix8.execute-api.eu-west-1.amazonaws.com/test';
 
 export const fetchFlightData = async (): Promise<FlightData[]> => {

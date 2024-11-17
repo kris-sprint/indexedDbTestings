@@ -8,9 +8,12 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
+  /* TODO consider targeting only select elements + impact on accessibility */
+  -webkit-tap-highlight-color: transparent;
+
   --white: #ffffff;
   --black: #181818;
-  --gray: #F1F5F6;
+  --gray: #f1f5f6;
   --border: #666666;
 
   --header: #f60;
