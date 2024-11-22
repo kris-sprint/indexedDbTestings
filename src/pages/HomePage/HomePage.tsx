@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getToken, onMessage, deleteToken } from "@firebase/messaging";
+import { getToken, deleteToken } from "@firebase/messaging";
 import styles from './HomePage.module.css';
 
 import { messaging } from "../../config/firebase";
@@ -42,16 +42,6 @@ const Home: React.FC = () => {
 
     checkSubscription();
 
-    // Handle incoming messages while app is in the foreground
-    const unsubscribe = onMessage(messaging, (payload) => {
-      console.log("Message received. ", payload);
-      setNotification({
-        title: payload.notification?.title || "Notification",
-        body: payload.notification?.body || "No body",
-      });
-    });
-
-    return () => unsubscribe();
   }, []);
 
   const toggleNotificationSubscription = async () => {
