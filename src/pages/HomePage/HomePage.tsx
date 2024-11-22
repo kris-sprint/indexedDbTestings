@@ -127,12 +127,7 @@ const Home: React.FC = () => {
       )}
 
       {/* Show notification payload */}
-      {notification && (
-        <div className={styles.notification}>
-          <h2>{notification.title}</h2>
-          <p>{notification.body}</p>
-        </div>
-      )}
+     
     </div>
   );
 };
