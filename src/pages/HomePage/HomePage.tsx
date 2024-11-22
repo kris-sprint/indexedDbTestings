@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getToken, onMessage, deleteToken } from "@firebase/messaging";
 import styles from './HomePage.module.css';
 
-import { messaging } from "../../config/firebase"
+import { messaging } from "../../config/firebase";
 
 const PUBLIC_VAPID_KEY = 'YOUR_PUBLIC_VAPID_KEY'; // Optional, from Firebase settings
 
@@ -10,6 +10,16 @@ const Home: React.FC = () => {
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [fcmToken, setFcmToken] = useState<string | null>(null);
   const [notification, setNotification] = useState<{ title: string; body: string } | null>(null);
+  const [showToken, setShowToken] = useState(() => {
+    // Initialize from localStorage
+    const savedState = localStorage.getItem('showToken');
+    return savedState === null ? true : JSON.parse(savedState);
+  });
+
+  useEffect(() => {
+    // Save `showToken` state to localStorage whenever it changes
+    localStorage.setItem('showToken', JSON.stringify(showToken));
+  }, [showToken]);
 
   useEffect(() => {
     // Check if the user is already subscribed
@@ -88,7 +98,7 @@ const Home: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Home Page</h1>
+      <h1>Home Page</h1>
 
       {/* Notification Toggle */}
       <div className={styles.switchContainer}>
@@ -100,24 +110,29 @@ const Home: React.FC = () => {
           />
           <span className={styles.slider}></span>
         </label>
-        <p>{isSubscribed ? 'Subscribed to notifications' : 'Not subscribed to notifications'}</p>
       </div>
 
       {/* Display the FCM Token */}
-      {fcmToken && (
+      {fcmToken && showToken && (
         <div>
           <h3>Your FCM Token:</h3>
           <textarea readOnly value={fcmToken} rows={4} cols={50} />
+          <button
+            className={styles.hideButton}
+            onClick={() => setShowToken(false)}
+          >
+            Hide Token
+          </button>
         </div>
       )}
 
       {/* Show notification payload */}
-      {/* {notification && (
+      {notification && (
         <div className={styles.notification}>
           <h2>{notification.title}</h2>
           <p>{notification.body}</p>
         </div>
-      )} */}
+      )}
     </div>
   );
 };
