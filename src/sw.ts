@@ -74,7 +74,7 @@ self.addEventListener("push", function (event) {
     },
   };
 
-  event.waitUntil(self.registration.showNotification(data.title || "Notification Title", options));
+  // event.waitUntil(self.registration.showNotification(data.title || "Notification Title", options));
 });
 
 // self.addEventListener('notificationclick', function (event) {
