@@ -8,6 +8,8 @@ import { BiSolidPlaneAlt } from "react-icons/bi";
 import { BsFillBookmarkFill } from "react-icons/bs";
 import { BsChatLeftTextFill } from "react-icons/bs";
 
+import EasyJetLogo from '../../assets/EasyJet_logo.svg';
+
 interface AppShellProps {
   children: React.ReactNode;
 }
@@ -17,7 +19,7 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
     <div className={styles.container}>
       {/* TODO separate component */}
       <header className={styles.header}>
-        <div className={styles.logo}>My PWA</div>
+      <img src={EasyJetLogo} alt="easyJet logo" className={styles.logo} />
       </header>
 
       <main className={styles.main}>{children}</main>

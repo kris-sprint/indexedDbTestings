@@ -88,7 +88,7 @@ const Home: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Home Page v1.3</h1>
+      <h1 className={styles.title}>Home Page</h1>
 
       {/* Notification Toggle */}
       <div className={styles.switchContainer}>
@@ -112,12 +112,12 @@ const Home: React.FC = () => {
       )}
 
       {/* Show notification payload */}
-      {notification && (
+      {/* {notification && (
         <div className={styles.notification}>
           <h2>{notification.title}</h2>
           <p>{notification.body}</p>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

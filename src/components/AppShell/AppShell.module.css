@@ -54,3 +54,10 @@
 .navLinkItem.active svg {
   color: var(--nav-item-svg-active);
 }
+
+
+.logo {
+  max-width: 150px;
+  width: 30%;
+  height: auto;
+}
